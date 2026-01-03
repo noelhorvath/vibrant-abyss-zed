@@ -28,7 +28,6 @@ It's based on the original [Vibrant Abyss for **Visual Studio Code**](https://gi
 
 ## License
 
-This project is unlicensed. You are free to use, modify, and distribute the
-code without any restrictions. Refer to the [LICENSE] file for more details.
+This project is licensed under the **zlib License**. See the [LICENSE] file for details.
 
 [LICENSE]: https://github.com/noelhorvath/vibrant-abyss-zed/blob/main/LICENSE.md
