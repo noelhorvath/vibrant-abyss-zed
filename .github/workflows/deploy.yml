@@ -2,19 +2,64 @@ name: Deploy
 
 on:
   push:
-    tags:
-      - "v*"
+    branches:
+      - main
 
 jobs:
-  release:
-    name: Create new release
+  extract-version:
+    name: "Extract version"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Extract version from commit message
+        run: |
+          COMMIT_MSG=$(git log -1 --pretty=%B)
+          if [[ $COMMIT_MSG =~ (v[0-9]+\.[0-9]+\.[0-9]+) ]]; then
+            TAG="${BASH_REMATCH[1]}"
+            VERSION="${TAG#v}"
+            echo "tag=$TAG" >> $GITHUB_OUTPUT
+            echo "version=$VERSION" >> $GITHUB_OUTPUT
+          else
+            echo "No version pattern found in latest commit message. Skipping."
+            exit 0
+          fi
+
+  prepare-release:
+    name: "Prepare release"
+    needs: extract-version
+    if: needs.extract-version.outputs.version != ''
+    runs-on: ubuntu-latest
     permissions:
       contents: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Update extension version
+        if: steps.get_version.outputs.version != ''
+        uses: cssnr/toml-action@v1
+        with:
+          file: extension.toml
+          path: $.version
+          value: ${{ needs.extract-version.outputs.version }}
+      - name: Push changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "Release ${{ needs.extract-version.outputs.tag }}"
+          git tag ${{ needs.extract-version.outputs.tag }}
+          git push origin main && git push origin main --tags
+
+  deploy:
+    name: Deploy
+    needs: prepare-release
+    if: needs.prepare-release.result == 'success'
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Update release
+      - name: Create new release
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "themes/vibrant-abyss-zed.json"
+          artifacts: themes/vibrant-abyss-zed.json
