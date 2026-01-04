@@ -33,7 +33,7 @@ jobs:
       - name: Update extension version
         uses: cssnr/toml-action@v1
         with:
-          file: themes/vibrant-abyss-zed.json
+          file: extension.toml
           path: $.version
           value: ${{ github.ref_name }}
 
