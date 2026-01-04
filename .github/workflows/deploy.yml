@@ -17,6 +17,5 @@ jobs:
       - name: Update release
         uses: ncipollo/release-action@v1
         with:
-          allowUpdates: true
           makeLatest: true
           artifacts: "themes/vibrant-abyss-zed.json"
