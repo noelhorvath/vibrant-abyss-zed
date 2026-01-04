@@ -30,12 +30,12 @@ jobs:
             exit 0
           fi
 
-      - name: Edit Toml
-        uses: ciiiii/toml-editor@1.0.0
+      - name: Update extension version
+        uses: cssnr/toml-action@v1
         with:
-          file: "extension.toml"
-          key: "version"
-          value: "${{ steps.get_version.outputs.version }}"
+          file: themes/vibrant-abyss-zed.json
+          path: $.version
+          value: ${{ github.ref_name }}
 
       - name: Create tag, commit and push changes
         if: steps.get_version.outputs.version != ''
@@ -47,4 +47,4 @@ jobs:
           git commit -m "Release ${{ steps.get_version.outputs.full_tag }}"
 
           git tag ${{ steps.get_version.outputs.full_tag }}
-          git push origin main && git push --tags
+          git push origin main && git push origin main --tags
