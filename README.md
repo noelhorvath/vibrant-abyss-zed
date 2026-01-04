@@ -20,11 +20,11 @@ It's based on the original [Vibrant Abyss for **Visual Studio Code**](https://gi
 
 ## Screenshots
 
-![CSharp](https://github.com/noelhorvath/vibrant-abyss-zed/blob/main/screenshots/csharp.png?raw=true)
+![CSharp](https://github.com/noelhorvath/vibrant-abyss-zed/blob/main/assets/screenshots/csharp.png?raw=true)
 </br>
-![Rust](https://github.com/noelhorvath/vibrant-abyss-zed/blob/main/screenshots/rust.png?raw=true)
+![Rust](https://github.com/noelhorvath/vibrant-abyss-zed/blob/main/assets/screenshots/rust.png?raw=true)
 </br>
-![Tsx](https://github.com/noelhorvath/vibrant-abyss-zed/blob/main/screenshots/tsx.png?raw=true)
+![Tsx](https://github.com/noelhorvath/vibrant-abyss-zed/blob/main/assets/screenshots/tsx.png?raw=true)
 
 ## License
 
