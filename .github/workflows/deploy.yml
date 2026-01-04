@@ -43,7 +43,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
       - name: Update extension version
-        if: steps.get_version.outputs.version != ''
         uses: cssnr/toml-action@v1
         with:
           file: extension.toml
@@ -68,7 +67,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          ref: main
       - name: Create new release
         uses: ncipollo/release-action@v1
         with:
+          tag: ${{ needs.extract-version.outputs.tag }}
+          makeLatest: true
           artifacts: themes/vibrant-abyss-zed.json
